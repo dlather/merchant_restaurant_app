@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "1035689085571",
+    "firebase_url": "https://restaurant-order-app-290403.firebaseio.com",
+    "project_id": "restaurant-order-app-290403",
+    "storage_bucket": "restaurant-order-app-290403.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035689085571:android:0845d007b6bfc01395a9b6",
+        "android_client_info": {
+          "package_name": "com.example.merchant_restaurant_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035689085571-d6966nb0ka0p61ilrga0vukqhirojv71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmvL24OJwr1pzls62N2lQ5neFZxBcy4p8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035689085571-d6966nb0ka0p61ilrga0vukqhirojv71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035689085571:android:14f38c0e48cb58e195a9b6",
+        "android_client_info": {
+          "package_name": "com.example.restaurant_order_app_2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035689085571-6h93kmk9jmtf5ai5nrlqflfeivtela56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.restaurant_order_app_2020",
+            "certificate_hash": "5d0e73c3f4950544fcc3e227dae9b8ea4c052546"
+          }
+        },
+        {
+          "client_id": "1035689085571-d6966nb0ka0p61ilrga0vukqhirojv71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmvL24OJwr1pzls62N2lQ5neFZxBcy4p8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035689085571-d6966nb0ka0p61ilrga0vukqhirojv71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
