@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:merchant_restaurant_app/actions/data.dart';
 import 'package:merchant_restaurant_app/model/app_state.dart';
+import 'package:merchant_restaurant_app/model/current_user.dart';
 import 'package:merchant_restaurant_app/pages/home_page.dart';
 import 'package:merchant_restaurant_app/pages/registration_page.dart';
 import 'package:redux/redux.dart';
@@ -11,8 +13,10 @@ class HomeRegistrationDecider extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector(
         // TODO: Remove const email
-        onInit: (store) =>
-            store.dispatch(FetchData(restaurantId: 'owneremail.gmail.com')),
+        onInit: (store) {
+          CurrentUser currentUser = store.state.currentUser;
+          store.dispatch(FetchData(ownerEmail: currentUser.currentUser.email));
+        },
         converter: _ViewModel.fromStore,
         builder: (BuildContext context, _ViewModel vm) {
           return vm.isLoading

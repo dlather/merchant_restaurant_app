@@ -47,6 +47,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading  restaurantDetails: ${restaurantDetails.name} ui:${ui.selectedBottomNavTab} currentUser: ${currentUser.isLoggedIn}';
+    return 'AppState{isLoading: $isLoading  restaurantDetails: ${restaurantDetails.owner.name} ui:${ui.selectedBottomNavTab} currentUser: ${currentUser.isLoggedIn}';
   }
 }

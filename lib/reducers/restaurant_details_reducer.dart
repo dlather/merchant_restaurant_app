@@ -1,15 +1,21 @@
+import 'package:merchant_restaurant_app/model/owner_details.dart';
 import 'package:redux/redux.dart';
 import '../actions/data.dart';
 import '../model/restaurant_details.dart';
 
 final Reducer<RestaurantDetails> restaurantDetailsReducer = combineReducers([
-  new TypedReducer<RestaurantDetails, FetchDataSuccess>(_fetchData),
+  new TypedReducer<RestaurantDetails, FetchRestaurantDetailsDataSuccess>(
+      _fetchRestaurantDetailsDataSuccess),
 ]);
 
-RestaurantDetails _fetchData(RestaurantDetails prevRestaurantDetails, action) {
-  if (action is FetchDataSuccess) {
+RestaurantDetails _fetchRestaurantDetailsDataSuccess(
+    RestaurantDetails prevRestaurantDetails, action) {
+  if (action is FetchRestaurantDetailsDataSuccess) {
     return prevRestaurantDetails.copyWith(
-      restaurantId: prevRestaurantDetails.restaurantId,
+      name: action.restaurantDetails.name,
+      mobile: action.restaurantDetails.mobile,
+      address: action.restaurantDetails.address,
+      owner: action.restaurantDetails.owner,
     );
   }
   return prevRestaurantDetails;

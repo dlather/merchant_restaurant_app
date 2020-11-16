@@ -61,17 +61,17 @@
 //               child: Column(
 //                 mainAxisAlignment: MainAxisAlignment.center,
 //                 children: [
-//                   Container(
-//                     padding: EdgeInsets.symmetric(vertical: 10),
-//                     child: TextFormField(
-//                       onChanged: (value) {
-//                         restaurantName = value;
-//                       },
-//                       decoration:
-//                           InputDecoration(labelText: 'Enter Restaurant Name'),
-//                       keyboardType: TextInputType.name,
-//                     ),
-//                   ),
+// Container(
+//   padding: EdgeInsets.symmetric(vertical: 10),
+//   child: TextFormField(
+//     onChanged: (value) {
+//       restaurantName = value;
+//     },
+//     decoration:
+//         InputDecoration(labelText: 'Enter Restaurant Name'),
+//     keyboardType: TextInputType.name,
+//   ),
+// ),
 //                   Container(
 //                     padding: EdgeInsets.symmetric(vertical: 10),
 //                     child: TextFormField(
