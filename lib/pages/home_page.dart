@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:merchant_restaurant_app/actions/ui.dart';
 import 'package:merchant_restaurant_app/model/app_state.dart';
+import 'package:merchant_restaurant_app/widgets/qr.dart';
 import 'package:redux/redux.dart';
+import '../widgets/account.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,12 +24,8 @@ class _HomePageState extends State<HomePage> {
     Center(
       child: Text('Menu'),
     ),
-    Center(
-      child: Text('QR'),
-    ),
-    Center(
-      child: Text('Account'),
-    ),
+    QrCode(),
+    Account(),
   ];
   @override
   Widget build(BuildContext context) {

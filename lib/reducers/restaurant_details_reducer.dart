@@ -16,6 +16,7 @@ RestaurantDetails _fetchRestaurantDetailsDataSuccess(
       mobile: action.restaurantDetails.mobile,
       address: action.restaurantDetails.address,
       owner: action.restaurantDetails.owner,
+      restaurantId: action.restaurantDetails.restaurantId,
     );
   }
   return prevRestaurantDetails;

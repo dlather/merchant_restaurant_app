@@ -1,5 +1,9 @@
-import './category.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+import './category.dart';
+part 'menu.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Menu {
   List<Category> menu;
 
@@ -16,4 +20,8 @@ class Menu {
       menu: menu ?? this.menu,
     );
   }
+
+  factory Menu.fromJson(Map<String, dynamic> data) => _$MenuFromJson(data);
+
+  Map<String, dynamic> toJson() => _$MenuToJson(this);
 }

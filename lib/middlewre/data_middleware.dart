@@ -1,9 +1,11 @@
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:merchant_restaurant_app/actions/common_actions.dart';
 import 'package:merchant_restaurant_app/actions/data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:merchant_restaurant_app/model/app_state.dart';
 import 'package:merchant_restaurant_app/model/owner_details.dart';
 import 'package:merchant_restaurant_app/model/restaurant_details.dart';
+import 'package:merchant_restaurant_app/routing_constant.dart';
 import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createDataMiddleware() {
@@ -26,21 +28,10 @@ Middleware<AppState> _createFetchData() {
             .where("ownerEmail", isEqualTo: action.ownerEmail)
             .get();
         if (querySnapshot.docs.length == 1) {
-          dynamic data = querySnapshot.docs.single.data();
-          store.dispatch(
-            FetchRestaurantDetailsDataSuccess(
-              restaurantDetails: RestaurantDetails(
-                name: data['restaurantDetails']['name'],
-                mobile: data['restaurantDetails']['mobile'],
-                address: data['restaurantDetails']['address'],
-                owner: OwnerDetails(
-                  imageUrl: data['restaurantDetails']['owner']['imageUrl'],
-                  mobile: data['restaurantDetails']['owner']['mobile'],
-                  name: data['restaurantDetails']['owner']['name'],
-                ),
-              ),
-            ),
-          );
+          Map<String, dynamic> data = querySnapshot.docs.single.data();
+          store.dispatch(FetchRestaurantDetailsDataSuccess(
+            restaurantDetails: RestaurantDetails.fromJson(data),
+          ));
         } else {
           print("Query Snapshot has length ${querySnapshot.docs.length}");
         }
@@ -58,22 +49,66 @@ Middleware<AppState> _createSubmitRestaurantDetails() {
     if (action is SubmitRestaurantDetails) {
       try {
         store.dispatch(SetIsLoading(isLoading: true));
-        var data = {
-          'ownerEmail': action.ownerEmail,
-          'restaurantDetails': {
-            'name': action.name,
-            'mobile': action.mobile,
-            'address': action.address,
-            'owner': {
-              'name': action.owner.name,
-              'mobile': action.owner.mobile,
-              'imageUrl': action.owner.imageUrl
-            },
+        print(
+            '--------------------------${action.type.toString()}--------------');
+        RestaurantDetails restaurantDetails = RestaurantDetails(
+          name: action.name,
+          mobile: action.mobile,
+          address: action.address,
+          owner: OwnerDetails(
+            name: action.owner.name,
+            mobile: action.owner.mobile,
+            imageUrl: action.owner.imageUrl,
+          ),
+        );
+        if (action.type == Type.create) {
+          DocumentReference documentReference =
+              FirebaseFirestore.instance.collection('Restaurants').doc();
+          RestaurantDetails createRestaurantDetails =
+              restaurantDetails.copyWith(
+            restaurantId: documentReference.id,
+          );
+          var data = {
+            'ownerEmail': action.ownerEmail,
+            'restaurantDetails': createRestaurantDetails.toJson(),
+          };
+          await documentReference.set(data);
+          store.dispatch(
+            FetchRestaurantDetailsDataSuccess(
+              restaurantDetails: restaurantDetails,
+            ),
+          );
+        } else if (action.type == Type.update) {
+          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+              .collection('Restaurants')
+              .where("ownerEmail", isEqualTo: action.ownerEmail)
+              .get();
+
+          print(querySnapshot.docs.first.id);
+          if (querySnapshot.docs.length == 1) {
+            String docId = querySnapshot.docs.single.id;
+            RestaurantDetails updateRestaurantDetails =
+                restaurantDetails.copyWith(
+              restaurantId: docId,
+            );
+            var data = {
+              'ownerEmail': action.ownerEmail,
+              'restaurantDetails': updateRestaurantDetails.toJson(),
+            };
+            await FirebaseFirestore.instance
+                .collection('Restaurants')
+                .doc(docId)
+                .update(data);
+            store.dispatch(
+              FetchRestaurantDetailsDataSuccess(
+                restaurantDetails: restaurantDetails,
+              ),
+            );
+          } else {
+            print("Query Snapshot has length ${querySnapshot.docs.length}");
           }
-        };
-        DocumentReference documentReference =
-            FirebaseFirestore.instance.collection('Restaurants').doc();
-        await documentReference.set(data);
+        }
+        store.dispatch(NavigateToAction.replace(HomePageRoute));
         store.dispatch(SetIsLoading(isLoading: false));
       } catch (error) {
         print('_createFetchData $error');

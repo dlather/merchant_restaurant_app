@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'ui.g.dart';
+
+@JsonSerializable()
 class Ui {
   final int selectedBottomNavTab;
   List<String> bottomNavTabs;
@@ -26,4 +31,8 @@ class Ui {
       appBarTitles: appBarTitles ?? this.appBarTitles,
     );
   }
+
+  factory Ui.fromJson(Map<String, dynamic> data) => _$UiFromJson(data);
+
+  Map<String, dynamic> toJson() => _$UiToJson(this);
 }

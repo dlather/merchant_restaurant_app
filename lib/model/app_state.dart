@@ -5,6 +5,8 @@ import 'package:merchant_restaurant_app/model/ui.dart';
 import './restaurant_details.dart';
 import './menu.dart';
 
+// `flutter pub run build_runner build` for json serilization
+
 @immutable
 class AppState {
   final bool isLoading;
@@ -47,6 +49,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading  restaurantDetails: ${restaurantDetails.owner.name} ui:${ui.selectedBottomNavTab} currentUser: ${currentUser.isLoggedIn}';
+    return 'AppState{isLoading: $isLoading  restaurantName: ${restaurantDetails.name} ui:${ui.selectedBottomNavTab} isLoggedIn: ${currentUser.isLoggedIn}';
   }
 }

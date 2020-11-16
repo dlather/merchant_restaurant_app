@@ -23,9 +23,9 @@ class QrCodeState extends State<QrCode> {
   var selectNumber = new List<int>.generate(10, (i) => i + 1);
   String selectedNumber = '1';
   Map _dataJson = {
-    'restaurant_id': '123456789',
+    'restaurantId': '123456789',
     'item': 'table',
-    'item_no': '1',
+    'itemNo': '1',
   };
 
   @override
@@ -41,7 +41,12 @@ class QrCodeState extends State<QrCode> {
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      await Share.file('title', 'menu.png', pngBytes, 'image/png');
+      await Share.file(
+          'title',
+          '${_dataJson['item']}-${_dataJson['itemNo']}.png',
+          pngBytes,
+          'image/png',
+          text: '${_dataJson['item']}-${_dataJson['itemNo']}');
     } catch (e) {
       print(e.toString());
     }
@@ -93,14 +98,20 @@ class QrCodeState extends State<QrCode> {
                     onChanged: (String result) {
                       setState(() {
                         selectedNumber = result;
-                        _dataJson['item_no'] = result.toLowerCase();
+                        _dataJson['itemNo'] = result.toLowerCase();
                       });
                     },
                     value: selectedNumber.toString(),
                   ),
                   RaisedButton(
                     onPressed: _captureAndSharePng,
-                    child: Text('Share'),
+                    color: Colors.lightBlue[50],
+                    child: Text(
+                      'Share',
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ),
+                    ),
                   ),
                 ],
               ),

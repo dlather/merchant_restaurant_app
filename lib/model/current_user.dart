@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 // if isLoggedIn is true then currentUser contains data for sure,
 // if isLoggedIn is false then currentUser may/may not contain data
-
 class CurrentUser {
   bool isLoggedIn;
   User currentUser;

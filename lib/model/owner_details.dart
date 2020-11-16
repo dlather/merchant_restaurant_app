@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'owner_details.g.dart';
+
+@JsonSerializable()
 class OwnerDetails {
   final String name;
   final String mobile;
@@ -21,4 +26,9 @@ class OwnerDetails {
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }
+
+  factory OwnerDetails.fromJson(Map<String, dynamic> data) =>
+      _$OwnerDetailsFromJson(data);
+
+  Map<String, dynamic> toJson() => _$OwnerDetailsToJson(this);
 }

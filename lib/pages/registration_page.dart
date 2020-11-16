@@ -22,6 +22,7 @@ class RegistrationPage extends StatelessWidget {
             ? Scaffold(
                 body: Center(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Please Log In'),
                       CircularProgressIndicator(),
@@ -149,6 +150,9 @@ class RegistrationPage extends StatelessWidget {
                                   if (_formKey.currentState.validate() &&
                                       !vm.isLoading) {
                                     vm.onSubmit(
+                                      type: vm.typeIsCreate
+                                          ? Type.create
+                                          : Type.update,
                                       ownerEmail: vm.currentUser.email,
                                       name: name,
                                       mobile: mobile,
@@ -189,14 +193,17 @@ class _ViewModel {
   final User currentUser;
   final bool isLoggedIn;
   final bool isLoading;
+  final bool typeIsCreate;
   final Function({
     String name,
     String mobile,
     String address,
     String ownerEmail,
+    Type type,
     OwnerDetails owner,
   }) onSubmit;
   _ViewModel({
+    this.typeIsCreate,
     this.currentUser,
     this.isLoading,
     this.isLoggedIn,
@@ -206,8 +213,10 @@ class _ViewModel {
     return _ViewModel(
       currentUser: store.state.currentUser.currentUser,
       isLoading: store.state.isLoading,
+      typeIsCreate: store.state.restaurantDetails.name.isEmpty,
       isLoggedIn: store.state.currentUser.isLoggedIn,
       onSubmit: ({
+        Type type,
         String name,
         String mobile,
         String ownerEmail,
@@ -221,6 +230,7 @@ class _ViewModel {
           mobile: mobile,
           address: address,
           owner: owner,
+          type: type,
         ),
       ),
     );
