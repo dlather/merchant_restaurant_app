@@ -3,11 +3,11 @@ import '../actions/data.dart';
 import '../model/menu.dart';
 
 final Reducer<Menu> menuReducer = combineReducers([
-  new TypedReducer<Menu, FetchData>(_fetchData),
+  new TypedReducer<Menu, FetchDataSuccess>(_fetchData),
 ]);
 
 Menu _fetchData(Menu prevMenu, action) {
-  if (action is FetchData) {
+  if (action is FetchDataSuccess) {
     return prevMenu.copyWith(
       menu: prevMenu.menu,
     );

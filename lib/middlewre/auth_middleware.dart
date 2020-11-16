@@ -20,15 +20,19 @@ List<Middleware<AppState>> createAuthMiddleware() {
 
 Middleware<AppState> _createIsLoggedInMiddleware() {
   return (Store store, action, NextDispatcher next) async {
-    store.dispatch(SetIsLoading(isLoading: true));
-    await Firebase.initializeApp();
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    User user = _auth.currentUser;
-    if (user != null) {
-      print('Auto Logged in' + user.displayName);
-      store.dispatch(new LogInSuccessful(user: user));
+    try {
+      store.dispatch(SetIsLoading(isLoading: true));
+      await Firebase.initializeApp();
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      User user = _auth.currentUser;
+      if (user != null) {
+        print('Auto Logged in');
+        store.dispatch(new LogInSuccessful(user: user));
+      }
+      store.dispatch(SetIsLoading(isLoading: false));
+    } catch (error) {
+      print('_createIsLoggedInMiddleware + $error');
     }
-    store.dispatch(SetIsLoading(isLoading: false));
     next(action);
   };
 }
@@ -55,6 +59,7 @@ Middleware<AppState> _createLogInMiddleware() {
       print('Logged in ' + user.displayName);
       store.dispatch(new LogInSuccessful(user: user));
     } catch (error) {
+      print('Logged in Failed ' + error);
       store.dispatch(new LogInFail(error));
     }
     store.dispatch(SetIsLoading(isLoading: false));
@@ -64,17 +69,22 @@ Middleware<AppState> _createLogInMiddleware() {
 
 Middleware<AppState> _createLogOutMiddleware() {
   return (Store store, action, NextDispatcher next) async {
-    store.dispatch(SetIsLoading(isLoading: true));
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
-      await googleSignIn.signOut();
-      await _auth.signOut();
-      store.dispatch(LogOutSuccessful);
+      store.dispatch(SetIsLoading(isLoading: true));
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      try {
+        await googleSignIn.signOut();
+        await _auth.signOut();
+        print('LogOutSuccessful ');
+        store.dispatch(LogOutSuccessful());
+      } catch (error) {
+        print("Error in Logout + $error");
+      }
+      store.dispatch(SetIsLoading(isLoading: false));
     } catch (error) {
-      print("Error in Logout + $error");
+      print('_createLogOutMiddleware $error');
     }
-    store.dispatch(SetIsLoading(isLoading: false));
     next(action);
   };
 }

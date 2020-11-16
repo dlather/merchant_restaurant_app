@@ -14,7 +14,9 @@ class LoginPage extends StatelessWidget {
             children: <Widget>[
               Image(image: AssetImage("assets/menu.png"), height: 200.0),
               SizedBox(height: 80),
-              GoogleAuthButtonContainer(),
+              GoogleAuthButtonContainer(
+                logIn: true,
+              ),
             ],
           ),
         ),

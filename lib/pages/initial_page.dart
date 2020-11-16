@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:merchant_restaurant_app/pages/home_registration_decider.dart';
 import 'package:redux/redux.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../model/app_state.dart';
 import '../actions/auth_actions.dart';
 import './login_page.dart';
-import './home_page.dart';
 
 class InitialPage extends StatelessWidget {
   @override
@@ -14,18 +13,18 @@ class InitialPage extends StatelessWidget {
       onInit: (store) => store.dispatch(IsLoggedIn()),
       converter: _ViewModel.fromStore,
       builder: (BuildContext context, _ViewModel vm) {
-        return vm.currentUser != null ? HomePage() : LoginPage();
+        return vm.isLoggedIn ? HomeRegistrationDecider() : LoginPage();
       },
     );
   }
 }
 
 class _ViewModel {
-  User currentUser;
-  _ViewModel({this.currentUser});
+  bool isLoggedIn;
+  _ViewModel({this.isLoggedIn});
   static _ViewModel fromStore(Store<AppState> store) {
     return new _ViewModel(
-      currentUser: store.state.currentUser,
+      isLoggedIn: store.state.currentUser.isLoggedIn,
     );
   }
 }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-class GoogleAuthButton extends StatelessWidget {
-  final String buttonText;
+class GoogleLogInButton extends StatelessWidget {
   final bool isLoading;
   final Function onPressedCallback;
-  GoogleAuthButton({
-    @required this.buttonText,
+  GoogleLogInButton({
     this.onPressedCallback,
     this.isLoading,
   });
@@ -34,7 +32,7 @@ class GoogleAuthButton extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      buttonText,
+                      'Log in with Google',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.black54,

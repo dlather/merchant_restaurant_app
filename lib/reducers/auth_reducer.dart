@@ -1,22 +1,30 @@
 // reducers/auth_reducer.dart
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:merchant_restaurant_app/model/app_state.dart';
+import 'package:merchant_restaurant_app/model/current_user.dart';
 import '../actions/auth_actions.dart';
 import 'package:redux/redux.dart';
 
-final Reducer<User> authReducer = combineReducers([
-  new TypedReducer<User, LogInSuccessful>(_logIn),
-  new TypedReducer<User, LogOut>(_logOut),
+final Reducer<CurrentUser> authReducer = combineReducers([
+  new TypedReducer<CurrentUser, LogInSuccessful>(_logIn),
+  new TypedReducer<CurrentUser, LogOut>(_logOut),
 ]);
-User _logIn(User user, action) {
+CurrentUser _logIn(CurrentUser user, action) {
   if (action is LogInSuccessful) {
-    return action.user;
+    return user.copyWith(
+      isLoggedIn: true,
+      currentUser: action.user,
+    );
   }
   return user;
 }
 
-Null _logOut(User user, action) {
+CurrentUser _logOut(CurrentUser user, action) {
   if (action is LogOut) {
-    return null;
+    return user.copyWith(
+      isLoggedIn: false,
+      currentUser: null,
+    );
   }
   return user;
 }
