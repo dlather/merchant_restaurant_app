@@ -29,8 +29,12 @@ Middleware<AppState> _createFetchData() {
             .get();
         if (querySnapshot.docs.length == 1) {
           Map<String, dynamic> data = querySnapshot.docs.single.data();
+          Map<String, dynamic> restaurantDetailsJson =
+              data['restaurantDetails'];
+          RestaurantDetails restaurantDetails =
+              RestaurantDetails.fromJson(restaurantDetailsJson);
           store.dispatch(FetchRestaurantDetailsDataSuccess(
-            restaurantDetails: RestaurantDetails.fromJson(data),
+            restaurantDetails: restaurantDetails,
           ));
         } else {
           print("Query Snapshot has length ${querySnapshot.docs.length}");

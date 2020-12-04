@@ -18,6 +18,25 @@ final sentry = SentryClient(
         "https://05dc4d59c56343b4bd9310dfa61ce8ba@o476622.ingest.sentry.io/5516591");
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Example of Encrption and Decryption
+  // String input = {
+  //   'restaurantId': '23456789dfgfd345t',
+  //   'item': 'table',
+  //   'itemNo': '2',
+  // }.toString();
+  // final publicPem = await rootBundle.loadString('assets/test/public.pem');
+  // final publicKey = RSAKeyParser().parse(publicPem) as RSAPublicKey;
+  // final privatePem = await rootBundle.loadString('assets/test/private.pem');
+  // final privKey = RSAKeyParser().parse(privatePem) as RSAPrivateKey;
+  // // final encrypter = Encrypter(RSA(publicKey: publicKey, privateKey: privKey));
+  // final encrypter = Encrypter(RSA(publicKey: publicKey));
+
+  // final encrypted = encrypter.encrypt(input);
+  // print('Encrypt ${encrypted.base64}');
+  // final decrypted = encrypter.decrypt(encrypted);
+  // print(decrypted);
+
   runZonedGuarded(
     () => runApp(MainApp()),
     (error, stackTrace) async {
